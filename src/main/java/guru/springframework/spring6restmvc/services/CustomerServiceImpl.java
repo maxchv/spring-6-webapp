@@ -8,29 +8,20 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.stream.IntStream;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
-    private final Map<UUID, Customer> customers = Stream.of(
+    private final Map<UUID, Customer> customers = IntStream.rangeClosed(1, 5)
+                    .mapToObj(i ->
                     Customer.builder()
                             .id(UUID.randomUUID())
-                            .customerName("First Customer")
-                            .build(),
-                    Customer.builder()
-                            .id(UUID.randomUUID())
-                            .customerName("Second Customer")
-                            .build(),
-                    Customer.builder()
-                            .id(UUID.randomUUID())
-                            .customerName("Third Customer")
+                            .customerName("Customer " + i)
+                            .version(1)
+                            .createdDate(LocalDateTime.now())
+                            .updateDate(LocalDateTime.now())
                             .build()
-            ).map(c -> {
-                c.setVersion(1);
-                c.setCreatedDate(LocalDateTime.now());
-                c.setUpdateDate(LocalDateTime.now());
-                return c;
-            })
+                    )
             .collect(Collectors.toMap(Customer::getId, c -> c));
 
     @Override
