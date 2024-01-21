@@ -1,5 +1,6 @@
 package guru.springframework.spring6restmvc.controller;
 
+import guru.springframework.spring6restmvc.model.Beer;
 import guru.springframework.spring6restmvc.model.Customer;
 import guru.springframework.spring6restmvc.services.CustomerService;
 import lombok.RequiredArgsConstructor;
@@ -56,6 +57,14 @@ public class CustomerController {
     @RequestMapping(value = "{customerId}", method = RequestMethod.GET)
     public Customer getCustomerById(@PathVariable("customerId") UUID id){
         return customerService.getCustomerById(id);
+    }
+
+    @PatchMapping("{id}")
+    public ResponseEntity<?> updateBeerPatchById(@PathVariable("id")UUID beerId, @RequestBody Customer customer){
+
+        customerService.patchBeerById(beerId, customer);
+
+        return ResponseEntity.noContent().build();
     }
 
 }
