@@ -50,4 +50,12 @@ public class CustomerController {
         return customerService.getCustomerById(id);
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deleteById(@PathVariable("id") UUID id){
+
+        customerService.deleteById(id);
+
+        return ResponseEntity.noContent().build();
+    }
+
 }
