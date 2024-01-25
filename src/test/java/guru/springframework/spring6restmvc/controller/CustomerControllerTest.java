@@ -62,7 +62,8 @@ class CustomerControllerTest {
         mockMvc.perform(put("/api/v1/customer/" + customer.getId())
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(customer)));
+                .content(objectMapper.writeValueAsString(customer)))
+                .andExpect(status().isNoContent());
         verify(customerService).updateCustomerById(customer.getId(), customer);
     }
 
